@@ -1,0 +1,157 @@
+
+body{
+	background-color:rgb(184,214,224);
+	
+	}
+ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.main
+{
+	width: auto;
+	margin: 0 auto;
+}
+.container{
+	margin-top:200px;
+}
+
+.login{
+	margin-top:100px;
+	margin-left:-20px;
+	margin-right:0px;
+	background-color:rgb(184,214,224);
+	height:300px;
+	width:2000px;
+	float:left;
+	border:5px solid #FFF;
+	border-radius:8px;
+}
+.topA{
+	float:left;
+	margin-left:150px;
+}
+
+.topB{
+	float:left;
+}
+.topC{
+	float:left;
+}
+.topA .title img{
+	margin-top:-82px;
+	margin-left:0px;
+	background-repeat:no-repeat;
+	width:424px;
+	height:382px;
+	overflow:hidden;
+	float:left;
+}
+.topB .title img{
+	margin-top:0px;
+	width:430px;
+	height:300px;
+	overflow:hidden;
+	background-repeat:no-repeat;
+	float:left;
+}
+.login-main{
+	float:left;
+	height:298px;
+	width:350px;
+	margin-left:150px;
+	border: 1px solid rgb(24,131,215);
+	border-radius:3px;
+/*	border-right:5px solid #FFF;*/
+	
+}
+.loginA{
+	height:80px;
+	background-color:#0e85c2;
+	
+}
+.loginA img{
+	margin-top:12px;
+}
+
+.loginB{
+	/*border:2px solid #9F9;
+	width:350px;
+    height:190px;*/
+	margin-top:50px;
+}
+.loginB-top{
+	margin-top:20px;
+}
+.loginB-bottom{
+	margin-top:20px;
+}
+
+.loginB2{
+	margin-top:20px;
+}
+
+.loginB2-top{
+	margin-top:20px;
+}
+
+.loginB2-bottom{
+	margin-top:20px;
+}
+.usernull{
+	color:#f00;
+	text-align:center;
+	margin-top:8px;
+}
+.text{
+	margin-top:225px;
+	margin-left:-370px;
+	width:375px;
+	height:350px;
+	background-color:rgb(184,214,224) ;
+	border:5px solid #FFF;
+	border-radius:5px;
+
+}	
+.left
+{ 
+	line-height: 35px;
+	vertical-align: middle;
+	width: 80px;
+	height:34px;
+	text-align: right;
+	color:#0e85c2;
+	display: -moz-inline-box;
+	display: inline-block;
+	padding-bottom:3px;
+}
+
+.txt
+{
+	width: 215px;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	border: 0px;
+	padding-left: 3px;
+	color: #999999;
+	background: url(../image/txt.gif) no-repeat left center;
+}
+
+
+
+.btn
+{
+	margin-left:100px;
+	width:70px;
+	height:27px;
+	color: set(190,218,230);
+	border:1px solid #0e85c2;
+	border-radius:5px;
+	font-size:15px;
+	color:#0e85c2;
+}
+
+

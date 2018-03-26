@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.AccountMangerDao">
+  <!-- 获取所有用户信息 -->
+	<resultMap id="AllUserResultMap" type="cn.yxxrui.model.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getAllUser" resultMap="AllUserResultMap"
+		parameterType="cn.yxxrui.model.User">
+		select
+		id,user_name,role_id
+		from user
+		
+	</select>
+	<!-- 根据用戶的role_id获取role的roleName角色名 -->
+	<resultMap id="RoleResultMap" type="cn.yxxrui.model.Role">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="getRoleNameById" resultMap="RoleResultMap"
+		parameterType="cn.yxxrui.model.Role">
+		select
+		id,role_name
+		from role where id=#{roleId}
+	</select>
+	<!-- 新增一个用户 -->
+	<insert id="addUser" parameterType="cn.yxxrui.model.User">
+		insert into user (user_name,
+		password, role_id
+		)
+		values
+		(
+		#{userName},
+		#{password},
+		#{roleId}
+		)
+	</insert>
+	<!-- 删除一个用户 -->
+	<delete id="delUserById" parameterType="java.lang.Integer">
+		delete from user
+		where id
+		= #{id}
+	</delete>
+	
+	    <!-- 用户查询 -->
+    <select id="find" parameterType="java.util.Map" resultMap="AllUserResultMap">
+        select * from user
+        
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+    <select id="getTotal" parameterType="java.util.Map" resultType="Long">
+        select count(*) from user
+    </select>
+</mapper>

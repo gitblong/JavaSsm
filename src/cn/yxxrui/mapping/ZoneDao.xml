@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.ZoneDao" >
+  <resultMap id="zoneResultMap" type="cn.yxxrui.model.Zone" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getAllZone" resultMap="zoneResultMap">
+  	select * from zone 
+  	
+  </select>
+	<select id="getZonePageInfo" parameterType="java.util.Map" resultMap="zoneResultMap">
+        select * from zone
+        
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+    <select id="getTotal" parameterType="java.util.Map" resultType="Long">
+        select count(*) from zone
+    </select>
+	<select id="getZoneNameById" parameterType="java.lang.Integer" resultType="String">
+        select zone_name from zone where id =#{zoneId}
+    </select>
+    
+    <select id="getZoneIdByZoneName" parameterType="java.lang.String" resultType="Integer">
+        select id from zone where zone_name =#{zoneName}
+    </select>
+    
+    
+    
+    <insert id="addZone" parameterType="cn.yxxrui.model.Zone">
+		insert into zone (
+		zone_name,
+		area
+		)
+		values
+		(
+		#{zoneName},
+		#{area}
+		)
+	</insert>
+	
+	<!-- 删除一个分区 -->
+	<delete id="deleteDistinctById" parameterType="java.lang.Integer">
+		delete from zone
+		where id
+		= #{id}
+	</delete>
+	
+	 <select id="selectZoneById" resultMap="zoneResultMap" parameterType="java.lang.Integer">
+        select * from zone where id = #{id}
+    </select>
+	<!-- 分区修改 -->
+    <update id="updateZone" parameterType="cn.yxxrui.dto.ZoneIdForByUpdate">
+		update zone 
+		<set>
+			zone_name = #{zoneName},
+			area = #{area}
+		</set>
+		where id = #{zoneId}
+	</update> 
+     
+	<!-- 查找单个分区 -->
+	 <resultMap id="zoneGetResultMap" type="cn.yxxrui.dto.ZoneIdForByUpdate">
+		<id column="id" property="zoneId" jdbcType="INTEGER" />
+		<result column="zone_name" property="zoneName" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+	</resultMap> 
+	
+    
+    <select id="getZoneById" resultMap="zoneGetResultMap" parameterType="java.lang.Integer">
+        select * from zone where id = #{zoneId}
+    </select> 
+</mapper>

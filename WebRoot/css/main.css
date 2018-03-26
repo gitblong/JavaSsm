@@ -1,0 +1,16 @@
+.logout {
+	float: right;
+}
+
+.title-top {
+	color: #1A1A1A;
+	margin-left: 30px;
+}
+
+.title-bottom {
+	line-height: 1.2;
+	text-align: center;
+	color: 	#1A1A1A;
+	font-size: 10px;
+	margin-top:5px;
+}

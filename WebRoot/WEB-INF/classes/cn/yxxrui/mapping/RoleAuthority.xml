@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.RoleAuthorityDao">
+	<resultMap id="RoleResultMap" type="cn.yxxrui.model.Role">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_authority" property="roleAuthority"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Role_Column_List">
+		id, role_name, role_authority
+	</sql>
+	<!-- 獲取所有角色 -->
+	<select id="getAllRole" resultMap="RoleResultMap" parameterType="cn.yxxrui.model.Role">
+		select
+		<include refid="Role_Column_List" />
+		from role
+		<if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+	</select>
+
+	<select id="getTotal" resultType="Long" parameterType="java.util.Map">
+		select
+		count(*)
+		from role
+	</select>
+
+	<!-- 角色删除 -->
+	<delete id="delRoleById" parameterType="java.lang.Integer">
+		delete from role
+		where id
+		= #{id}
+	</delete>
+
+	<!-- 角色添加 -->
+	<insert id="addRole" parameterType="cn.yxxrui.model.Role">
+		insert into role 
+		values(null,#{roleName},#{roleAuthority})
+	</insert>
+
+	<!-- 角色修改 -->
+	<update id="updateRole" parameterType="cn.yxxrui.model.Role">
+		update role 
+		<set>
+			role_name = #{roleName},
+			role_authority = #{roleAuthority}
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 查找角色 -->
+	<select id="selectRoleById" resultMap="RoleResultMap" parameterType="cn.yxxrui.model.Role">
+		select
+		<include refid="Role_Column_List" />
+		from role 
+		where id=#{id}
+	</select>
+</mapper>

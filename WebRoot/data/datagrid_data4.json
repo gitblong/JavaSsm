@@ -1,0 +1,15 @@
+{                                                      
+	"total":20,                                                      
+	"rows":[                                                          
+		{"code":"zjnu","Role":"用户"},         
+		{"code":"xp","Role":"协管员"},         
+		{"code":"js","Role":"系统管理员"},         
+		{"code":"c3p0","Role":"用户"},         
+		{"code":"dbcp","Role":"用户"},         
+		{"code":"css","Role":"房东"} ,
+		{"code":"xpp","Role":"协管员"},         
+		{"code":"jss","Role":"系统管理员"},         
+		{"code":"c3p","Role":"用户"}, 
+		{"code":"zjn","Role":"用户"}
+	]
+}

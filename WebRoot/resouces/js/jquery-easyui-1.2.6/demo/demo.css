@@ -1,0 +1,35 @@
+*{
+	font-size:12px;
+}
+body {
+    font-family:helvetica,tahoma,verdana,sans-serif;
+    padding:20px;
+    font-size:13px;
+    margin-top:0px;
+    margin-bottom:0px;
+    heigth:100%;
+    width:100%;
+}
+h2 {
+    font-size:18px;
+    color:#333;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+/* .wrap{
+	margin-top:0px;
+	margin-top:0px;
+	margin-left:0px;
+	margin-right:0px;
+} */
+.demo-info{
+	background:#FFFEE6;
+	color:#8F5700;
+	padding:12px;
+}
+.demo-tip{
+	width:24px;
+	height:16px;
+	float:left;
+}

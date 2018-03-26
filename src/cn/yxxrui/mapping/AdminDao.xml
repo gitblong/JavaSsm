@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.AdminDao">
+	<resultMap id="UserResultMap" type="cn.yxxrui.model.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="role_id" property="roleId" jdbcType="VARCHAR" />
+		<result column="landlord_id" property="landlordId" jdbcType="INTEGER" />
+		<result column="zone_id" property="zoneId" jdbcType="INTEGER" />
+		
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, user_name, password
+	</sql>
+	<!--目的；为dao接口方法提供sql语句配置 -->
+	<!--登入返回User数据 -->
+	<select id="findUserByName" resultMap="UserResultMap"
+		parameterType="java.lang.String">
+		select
+		*
+		from user
+		where user_name = #{userName}
+	</select>
+	<!-- 改变密码 -->
+	<update id="changePassword">
+		<!-- 具体的sql语句 -->
+		update
+		user
+		set
+		password = #{password}
+		where
+		user_name = #{userName}
+	</update>
+	<select id="selectRoleAuthByUserName" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		SELECT r.role_authority 
+		FROM 
+		role r ,user u 
+		WHERE r.id = u.role_id 
+		AND u.user_name =#{userName}
+	</select>
+	
+	<select id="selectAssistant" resultMap="UserResultMap" parameterType="java.util.Map">
+		select * from user where role_id = 5 
+  		<if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+	</select>
+	
+	
+</mapper>

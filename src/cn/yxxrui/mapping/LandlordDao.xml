@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.LandlordDao">
+	<resultMap id="landlordResultMap" type="cn.yxxrui.model.Landlord">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="landlord_name" property="landlordName"
+			jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="identity" property="identity" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="zone_id" property="zoneId" jdbcType="INTEGER" />
+
+	</resultMap>
+	<select id="getLandlordPageInfo" resultMap="landlordResultMap"
+		parameterType="java.util.Map">
+		select * from landlord
+		<if test="zoneId!=null">
+			<choose>
+				<when test="zoneId !=0">
+					where zone_id = #{zoneId}
+				</when>
+				<otherwise>
+					where 1=1
+				</otherwise>
+			</choose>
+		</if>
+
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	<select id="getLandlordTotal" resultType="Long" parameterType="java.util.Map">
+		select count(*) from landlord
+		<if test="zoneId!=null">
+			<choose>
+				<when test="zoneId !=0">
+					where zone_id = #{zoneId}
+				</when>
+				<otherwise>
+					where 1=1
+				</otherwise>
+			</choose>
+		</if>
+
+	</select>
+
+	<select id="getLandlordAddress" resultType="String"
+		parameterType="java.lang.Integer">
+		select address from landlord where id=#{landlordId}
+	</select>
+	<select id="getLandlordAllLandLordId" resultMap="landlordResultMap"
+		parameterType="java.util.Map">
+		select id from landlord
+		<if test="zoneId!=0">
+			<choose>
+				<when test="zoneId !=0">
+					where zone_id = #{zoneId}
+				</when>
+				<otherwise>
+					where 1=1
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<!-- 房东添加 -->
+	<insert id="addLandlord" parameterType="cn.yxxrui.model.Landlord">
+		insert into landlord
+		values(null,#{landlordName},null,#{telephone},#{identity},#{address},#{zoneId})
+	</insert>  
+
+	
+	<!-- 多条件查询房东 -->
+	<select id="selectLandlord" resultMap="landlordResultMap" parameterType="java.util.Map">
+		select * from landlord where 1=1
+		<if test="landlordName!=null">
+			and landlord_name LIKE CONCAT('%', CONCAT(#{landlordName}, '%')) 
+		</if>
+		<if test="telephone!=null">
+			and telephone LIKE CONCAT('%', CONCAT(#{telephone}, '%')) 
+		</if>
+		<if test="identity!=null">
+			and identity LIKE CONCAT('%', CONCAT(#{identity}, '%'))
+		</if>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+		
+	</select>
+	<select id="getSelectLandlordTotal" resultType="Long" parameterType="java.util.Map">
+		select count(*) from landlord where 1=1
+		<if test="landlordName!=null">
+			and landlord_name LIKE CONCAT('%', CONCAT(#{landlordName}, '%')) 
+		</if>
+		<if test="telephone!=null">
+			and telephone LIKE CONCAT('%', CONCAT(#{telephone}, '%')) 
+		</if>
+		<if test="identity!=null">
+			and identity LIKE CONCAT('%', CONCAT(#{identity}, '%'))
+		</if>
+
+	</select>
+	
+	<!-- 通过excel房东添加 -->
+	<insert id="addLandlordForExcel"  parameterType="cn.yxxrui.model.Landlord">
+		insert into landlord
+		values(null,#{landlordName},null,#{telephone},#{identity},#{address},#{zoneId})
+	</insert>
+	
+	<!-- 房东修改 -->
+	<update id="updateLandlord" parameterType="cn.yxxrui.dto.LandlordIdForByUpdate">
+		update landlord 
+		<set>
+			landlord_name = #{landlordName},
+			telephone = #{telephone},
+			address = #{address}
+		</set>
+		where id = #{landlordId}
+	</update>
+	<resultMap id="landlordGetResultMap" type="cn.yxxrui.dto.LandlordIdForByUpdate">
+		<id column="id" property="landlordId" jdbcType="INTEGER" />
+		<result column="landlord_name" property="landlordName"
+			jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+
+	</resultMap>
+	<select id="getLandlordById" resultMap="landlordGetResultMap" parameterType="java.lang.Integer">
+        select * from landlord where id = #{landlordId}
+    </select>
+	
+	
+	
+	<update id="addAddress" parameterType="cn.yxxrui.dto.LandlordIdForByUpdate">
+		update landlord 
+		<set>
+			address = #{address}
+		</set>
+		where id = #{landlordId}
+	</update>
+	
+	<delete id="deleteLandlord" parameterType="java.lang.Integer">
+		delete from landlord
+		where id
+		= #{id}
+	</delete>
+	
+	<delete id="batchRemove" parameterType="java.util.Map">
+		delete from landlord
+		where id in
+		<foreach item="item" index="index" collection="landlordIdArray" open="("  
+       		separator="," close=")">  
+      	 	#{item}  
+    	</foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.AuthorityDao" >
+	<resultMap id="AuthorityResultMap" type="cn.yxxrui.dto.AuthorityMessage" >
+		<result column="permission" property="authorityName" jdbcType="VARCHAR" />
+		<result column="url" property="authorityUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Authority_Column_List">
+		id, permission, menu_id,url
+	</sql>
+	<select id="getAuthorityInformationByIds" resultType="cn.yxxrui.model.Authority" parameterType="java.util.Map">
+  	select * from authority where id in
+  	<foreach item="item" index="index" collection="id" open="("  
+       separator="," close=")">  
+       #{item}  
+    </foreach>
+	<!-- <foreach item="auth_id" collection="auth_idList" open="(" separator="," close=")">
+        #{ids}
+    </foreach> -->
+  </select>
+  
+  <select id="getMenuId" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select menu_id from authority where id in
+  	<foreach item="item" index="index" collection="id" open="("  
+       separator="," close=")">  
+       #{item}  
+    </foreach>
+	<!-- <foreach item="auth_id" collection="auth_idList" open="(" separator="," close=")">
+        #{ids}
+    </foreach> -->
+    GROUP BY menu_id
+  </select>
+
+	<select id="getAuthorityMsgByMenuId" resultMap="AuthorityResultMap" parameterType="java.util.Map">
+  	select permission,url from authority where menu_id=#{menuId} and id in 
+  	<foreach item="item" index="index" collection="id" open="("  
+       separator="," close=")">  
+       #{item}  
+    </foreach>
+  </select>
+
+	
+</mapper>

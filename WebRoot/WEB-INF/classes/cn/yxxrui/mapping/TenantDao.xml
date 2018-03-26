@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yxxrui.dao.TenantDao" >
+  <resultMap id="tenantResultMap" type="cn.yxxrui.model.Tenant" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tenant_name" property="tenantName" jdbcType="VARCHAR" />
+    <result column="room_number" property="roomNumber" jdbcType="VARCHAR" />
+    <result column="landlord_id" property="landlordId" jdbcType="VARCHAR" />
+    <result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+    <result column="check_out_time" property="checkOutTime" jdbcType="TIMESTAMP" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    
+  </resultMap>
+
+	<select id="getTenantPageInfo" parameterType="java.util.Map" resultMap="tenantResultMap">
+        select id,tenant_name,room_number,landlord_id from tenant
+        where landlord_id in
+        <foreach item="item" index="index" collection="landlordIds" open="("  
+      		 separator="," close=")">  
+      		 #{item}  
+   		 </foreach>
+        
+         <if test="start!=null and size!=null">
+            limit #{start},#{size}
+         </if>
+        
+    </select>
+    <select id="getTenantTotal" resultType="Long" parameterType="java.lang.Integer">
+        select count(*) from tenant
+        where landlord_id in
+        <foreach item="item" index="index" collection="landlordIds" open="("  
+      		 separator="," close=")">  
+      		 #{item}  
+   		 </foreach>
+    </select>
+	<select id="getTenantInfoByLandlordId" resultMap="tenantResultMap" parameterType="java.lang.Integer">
+        select * from tenant where landlord_id = #{landlordId}
+    </select>
+	<select id="getTenantInfoByTenantId" resultMap="tenantResultMap" parameterType="java.lang.Integer">
+        select * from tenant where id = #{tenantId}
+    </select>
+	
+	<!-- 角色添加 -->
+	<insert id="addTenant" parameterType="cn.yxxrui.model.Tenant">
+		insert into tenant 
+		values(null,#{tenantName},#{roomNumber},#{landlordId},null,null,#{address})
+	</insert>
+
+	<!-- 角色修改 -->
+	<update id="updateTenant" parameterType="cn.yxxrui.dto.TenantInfo">
+		update tenant 
+		<set>
+			tenant_name = #{tenantName},
+			room_number = #{roomNumber}
+		</set>
+		where id = #{tenantId}
+	</update>
+	
+	<delete id="deleteTenant" parameterType="java.lang.Integer">
+		delete from tenant
+		where id
+		= #{id}
+	</delete>
+	
+</mapper>
